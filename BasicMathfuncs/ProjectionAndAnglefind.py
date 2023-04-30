@@ -50,6 +50,9 @@ def VectorProjection(a, b):
     
     return res
     
+def changeBasis(A, v):
+    np.cross(A, v)
+
 def angleBetweenAB(a, b):
     try:
         dotProd = np.dot(a,b)
