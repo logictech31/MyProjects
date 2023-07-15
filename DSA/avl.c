@@ -51,12 +51,12 @@ avl_node* LL(avl_node* parent) {
 
 
 avl_node* LR(avl_node* temp) {
-    temp = RR(temp->right);
+    temp->left = RR(temp->left);
     return (LL(temp));
 }
 
 avl_node* RL(avl_node* temp) {
-    temp = LL(temp->left);
+    temp->right = LL(temp->right);
     return (RR(temp));
 }
 
