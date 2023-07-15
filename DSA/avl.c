@@ -9,6 +9,17 @@ typedef struct avl_node {
 }avl_node;
 avl_node* root = NULL;
 
+// In this type of rotation, the parent node goes to left of temp
+// and the left of temp is assigned to right of parent node as it is its
+// inorder successor
+/*
+    a
+     \(R)                 ->                      c
+      c                                          /  \
+     / \(R)                                     a    d
+    b   d                                        \
+                                                  b
+*/
 avl_node* RR(avl_node* parent) {
     avl_node *temp;
 
@@ -18,14 +29,26 @@ avl_node* RR(avl_node* parent) {
 
     return temp;
 }
-
+// In this rotation, the parent node goes to the right of temp
+// and the right of temp is assigned to left of parent node as it is its
+// inorder predecessor
+/*
+        a
+    (L)/
+      b
+  (L)/ \
+    c   d
+*/
 avl_node* LL(avl_node* parent) {
     avl_node *temp;
 
     temp = parent->left;
     parent->left = temp->right;
     temp->right = parent;
+
+    return temp;
 }
+
 
 avl_node* LR(avl_node* temp) {
     temp = RR(temp->right);
@@ -52,16 +75,16 @@ avl_node* height_balance(avl_node *temp) {
     int left_height, right_height, balance_factor;
 
     if(temp == NULL) {
-        return NULL;
+        return temp;
     }
 
     left_height = avl_height(temp->left);
     right_height = avl_height(temp->right);
     balance_factor = left_height - right_height;
-    height_balance(temp->left);
+
     if(balance_factor > 1) {
         if(avl_height(temp->left->left) >= avl_height(temp->left->right)) {
-            temp = RR(temp);
+            temp = LL(temp);
         } else {
             temp = LR(temp);
         }
@@ -69,21 +92,20 @@ avl_node* height_balance(avl_node *temp) {
         if(avl_height(temp->right->left) >= avl_height(temp->right->right)) {
             temp = RL(temp);
         } else {
-            temp = LL(temp);
+            temp = RR(temp);
         }
     }
-    height_balance(temp->right);
 
     return temp;
 }
 
-int avl_add_node(avl_node* temp) {
+avl_node* avl_add_node(avl_node* temp) {
     bool flag = false;
     avl_node* curr;
 
      if(root == NULL) {
         root = temp;
-        return 0;
+        return root;
      }
 
      curr = root;
@@ -108,7 +130,7 @@ int avl_add_node(avl_node* temp) {
 
     root = height_balance(root);
     
-     return 0;
+     return root;
 }
 
 int display_algo() {
@@ -163,7 +185,7 @@ int main() {
                 temp->right = NULL;
                 printf("\nEnter data: ");
                 scanf("%d", &(temp->data));
-                avl_add_node(temp);
+                root = avl_add_node(temp);
                 printf("Do you want to continue adding nodes?(y/N):");
                 scanf(" %c", &choice);
             } while (choice == 'y');
