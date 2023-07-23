@@ -80,6 +80,9 @@ void namaei_logic(node *h1, node *h2) {
     free(t2->prev);
     while (t2->next != NULL) {
         t2 = t2->next;
+        if(string_compare(t2->path, ".")) {
+            continue;
+        }
         if(string_compare(t2->path, "..")) {
             t1 = t1->prev;
             free(t1->next);
@@ -98,44 +101,32 @@ void namaei_logic(node *h1, node *h2) {
 
 int main() {
     node *head, *tmp, *head_2;
-    char *base_path, *holder, *holder_c, *rel_path, *rel_path_c;
+    char *base_path, *holder, *rel_path;
 
     holder = (char*) malloc(MAX * sizeof(char));
-    holder_c = holder;
     base_path = (char*) malloc(MAX * sizeof(char));
     rel_path = (char*) malloc(MAX * sizeof(char));
-    rel_path_c = rel_path;
-    strcpy(rel_path, ".././hi/gorakhpur/");
     head = NEW;
     head_2 = NEW;
     tmp = head;
     tmp->next = NULL;
     tmp->prev = NULL;
     strcpy(tmp->path, "/");
+    // Input taken from user
     printf("Enter base path: ");
     fgets(base_path, MAX, stdin);
+    printf("Enter the relative path: ");
+    fgets(rel_path, MAX, stdin);
+
+    // inputted strings converted to a linked list, separated by '/'
     convert_to_ll(tmp, base_path, holder);
-/*
-    while(*base_path != '\0') {
-        if(*base_path == '/') {
-            base_path++;
-            tmp->next = add_new_node(holder_c);
-            tmp->next->prev = tmp;
-            tmp = tmp->next;
-            memset(holder, '\0', MAX * sizeof(char));
-            holder = holder_c;
-        } else {
-            *holder = *base_path;
-            holder++; base_path++;
-        }
-    }
-*/
     memset(holder, '\0', MAX * sizeof(char));
     convert_to_ll(head_2, rel_path, holder);
+
     traverse(head);
     printf("\n\n");
     traverse(head_2);
-
+    // namaei logic is applied in this section of the code
     namaei_logic(head, head_2);
     traverse(head);
 
