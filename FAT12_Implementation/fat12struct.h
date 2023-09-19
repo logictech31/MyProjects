@@ -23,3 +23,23 @@ struct bootloader {
     unsigned char file_sys_type[8];
     unsigned char ignore_rest[452];
 };
+
+struct directory {
+    unsigned char filename[8];
+    unsigned char extension[3];
+    unsigned char attributes;
+    unsigned short int reserved;
+    unsigned int creat_time[2];
+    unsigned char creat_date[2];
+    unsigned char last_access_date[2];
+    unsigned short int _ignore;
+    unsigned char last_write_time[2];
+    unsigned char last_write_date[2];
+    unsigned short int first_logical_cluster;
+    unsigned int file_size;
+};
+
+struct _FAT_12_ {
+    struct bootloader bt;
+    struct directory dir;
+};
