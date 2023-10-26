@@ -7,12 +7,16 @@ int sayHi() {
     return 56;
 }
 
+
 int main() {
     int (*ptr_to_func[MAX])() = {&sayHi};
-    int ret;
-
+    int ret, a = 10;
+    char c = 'B';
+    void *ptr;
+    ptr = &c;
     ret = (*ptr_to_func[0])();
-    printf("ret = %d\n",ret);
+    printf("%c", (*(int*)ptr));
+    printf("ret = %zu\n", sizeof(ptr));
     
     union CharInt {
         char a;
