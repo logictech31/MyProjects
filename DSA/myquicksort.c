@@ -1,52 +1,68 @@
 #include "myheaders.h"
-#define MAX 5
 
-// Global declerations
-int iarr[MAX] = {3, 1, 2, 6, 5};
+int size_arr;
+long *iarr;
+void quicksort(int, int);
 int partition(int, int);
-void swap(int*, int*);
-int quicksort(int, int);
+void swap(long*, long*);
 
-int main(void) {
+int main() {
     int i = 0;
-    quicksort(0, MAX-1);
-    while(i < MAX) {
+
+    printf("What is the size of array?");
+    scanf("%d", &size_arr);
+
+    iarr = (long*) malloc(size_arr * sizeof(long));
+
+    if(iarr == NULL) {
+        return -1;
+    }
+
+    printf("Array Input: ");
+    while(i < size_arr) {
+        scanf("%d", (iarr+i++));
+    }
+
+    quicksort(0, size_arr-1);
+
+    printf("Array Sorted: ");
+    i = 0;
+    while(i < size_arr) {
         printf("%d ", *(iarr+i++));
     }
 
     printf("\n");
+    free(iarr);
+
     return 0;
 }
 
-void swap(int *a, int *b) {
-    *a ^= *b;
-    *b ^= *a;
-    *a ^= *b;
+void swap(long *a, long *b) {
+    long temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
 int partition(int low, int high) {
-    int leftwall, pivot;
+    long pivot = iarr[low];
+    long leftwall = (long)low;
+    int i;
 
-    pivot = iarr[low];
-    leftwall = low;
-
-    for(int i = low + 1; i <= high; i ++) {
+    for(i = low + 1; i <= high; i++) {
         if(pivot > iarr[i]) {
-            swap(&iarr[leftwall], &iarr[i]);
+            swap(&iarr[i], &iarr[leftwall]);
             ++leftwall;
         }
     }
-
+    
     swap(&iarr[leftwall], &pivot);
 
     return leftwall;
 }
 
-int quicksort(int low, int high) {
-    int pivot;
-
-    if (low < high) {
-        pivot = partition(low, high);
+void quicksort(int low, int high) {
+    if(low < high) {
+        int pivot = partition(low, high);
         quicksort(low, pivot);
         quicksort(pivot+1, high);
     }
