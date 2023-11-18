@@ -1,5 +1,7 @@
 use std::io;
 
+pub mod garden;
+
 fn ret_two_vals() -> (i16, i16) {
     return (10, 5);
 }
