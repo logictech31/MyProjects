@@ -1,38 +1,41 @@
-#include "myheaders.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-int size_arr;
-long *iarr;
-void quicksort(int, int);
-int partition(int, int);
-void swap(long*, long*);
+static int size_arr;
+static long *iarr;
+static void quicksort(int, int);
+static int partition(int, int);
+static void swap(long*, long*);
 
 int main() {
     int i = 0;
 
-    printf("What is the size of array?");
-    scanf("%d", &size_arr);
+    (void)printf("What is the size of array?");
+    (void)scanf("%d", &size_arr);
 
-    iarr = (long*) malloc(size_arr * sizeof(long));
-
+    iarr = (long*) malloc(size_arr * sizeof(long int));
     if(iarr == NULL) {
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
-    printf("Array Input: ");
+    *iarr = 0;    
+
+
+    (void)printf("Array Input: ");
     while(i < size_arr) {
-        scanf("%d", (iarr+i++));
+        (void)scanf("%ld", (iarr+i++));
     }
 
     quicksort(0, size_arr-1);
 
-    printf("Array Sorted: ");
+    (void)printf("Array Sorted: ");
     i = 0;
     while(i < size_arr) {
-        printf("%d ", *(iarr+i++));
+        (void)printf("%ld ", *(iarr+i++));
     }
 
-    printf("\n");
-    free(iarr);
+    (void)printf("\n");
+    //free(iarr);
 
     return 0;
 }
@@ -45,7 +48,7 @@ void swap(long *a, long *b) {
 
 int partition(int low, int high) {
     long pivot = iarr[low];
-    long leftwall = (long)low;
+    int leftwall = (int)low;
     int i;
 
     for(i = low + 1; i <= high; i++) {

@@ -1,16 +1,12 @@
-/*
-    B-Tree is also called as Dynamic Multi-level Index
-*/
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 3
+#include <sys/types.h>
 
-struct tree_node {
-    int key[MAX];
-    int record_pointers;
+struct node {
+    int data[3];
+    struct node *left, *right;
 };
 
-int main(int argc, char argv[]) {
+int main(void) {
     
-    return 0;
 }
