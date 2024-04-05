@@ -5,7 +5,7 @@ static int size_arr;
 static long *iarr;
 static void quicksort(int, int);
 static int partition(int, int);
-static void swap(long*, long*);
+static int swap(long*, long*);
 
 int main() {
     int i = 0;
@@ -35,15 +35,20 @@ int main() {
     }
 
     (void)printf("\n");
-    //free(iarr);
+    free(iarr);
 
     return 0;
 }
 
-void swap(long *a, long *b) {
-    long temp = *a;
-    *a = *b;
-    *b = temp;
+int swap(long *a, long *b) {
+    if(a == NULL || b == NULL) {
+            return 1;
+    }
+    *a = *a ^ *b;
+    *b = *a ^ *b;
+    *a = *a ^ *b;
+
+    return 0;
 }
 
 int partition(int low, int high) {
@@ -58,7 +63,11 @@ int partition(int low, int high) {
         }
     }
     
-    swap(&iarr[leftwall], &pivot);
+    int retval = swap(&iarr[leftwall], &pivot);
+    
+    if(retval == 1) {
+        exit(1);
+    }
 
     return leftwall;
 }

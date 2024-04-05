@@ -1,0 +1,1 @@
+/usr/bin/c++ "CMakeFiles/hello-world.dir/main.cxx.o" -o hello-world 
