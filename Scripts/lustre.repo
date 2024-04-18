@@ -1,0 +1,17 @@
+[lustre-client]
+name=Lustre Client Repository
+baseurl=https://downloads.whamcloud.com/public/lustre/latest-release/el8.9/client
+enabled=1
+gpgcheck=0
+
+[lustre-server]
+name=Lustre Server Repository
+baseurl=https://downloads.whamcloud.com/public/lustre/latest-release/el8.9/server
+enabled=1
+gpgcheck=0
+
+[e2fsprogs]
+name=e2fsprogs
+baseurl=https://downloads.whamcloud.com/public/e2fsprogs/latest/el8
+enabled=1
+gpgcheck=0
