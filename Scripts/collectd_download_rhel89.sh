@@ -1,11 +1,11 @@
 #!/bin/bash
 if [ $USER == "root" ]
 then
-    wget https://storage.googleapis.com/collectd-tarballs/collectd-5.12.0.tar.bz2
-    tar -xf collectd-5.12.0.tar.bz2
-    cd collectd-5.12.0/
-    ./configure
-    make all install
+    dnf install -y libtool-ltdl-devel
+    git clone https://github.com/logictech31/collectd
+    cd collectd
+    git checkout collectd-5.2
+    sh build.sh
     echo "COLLECTD_DIR=\"/root/collectd-5.12.0\"" | tee -a /root/.bashrc
     echo "export PATH=\"$PATH:$COLLECTD_DIR/bin\"" | tee -a /root/.bashrc
 
