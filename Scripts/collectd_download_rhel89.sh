@@ -1,11 +1,13 @@
 #!/bin/bash
 if [ $USER == "root" ]
 then
-    dnf install -y libtool-ltdl-devel
+    echo "Execute llmount.sh to setup LUSTRE FS which resides in /usr/lib64/lustre/tests/llmount.sh"
+    yum install -y libtool-ltdl-devel libgcrypt-devel
     git clone https://github.com/logictech31/collectd
     cd collectd
     git checkout collectd-5.2
     sh build.sh
+    ./configure
     echo "COLLECTD_DIR=\"/root/collectd-5.12.0\"" | tee -a /root/.bashrc
     echo "export PATH=\"$PATH:$COLLECTD_DIR/bin\"" | tee -a /root/.bashrc
 
