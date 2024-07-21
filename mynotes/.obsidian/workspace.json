@@ -14,12 +14,25 @@
               "type": "markdown",
               "state": {
                 "file": "Collectd workflow.md",
-                "mode": "preview",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "d4253bdb793925b3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Collectd functions and responsibilities.md",
+                "mode": "source",
                 "source": false
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Collectd workflow.md",
+                "file": "Collectd functions and responsibilities.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Collectd workflow.md",
+                "file": "Collectd functions and responsibilities.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Collectd workflow.md"
+                "file": "Collectd functions and responsibilities.md"
               }
             }
           }
@@ -146,8 +159,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "951943e5ff633253",
+  "active": "d4253bdb793925b3",
   "lastOpenFiles": [
-    "Collectd workflow.md"
+    "Collectd workflow.md",
+    "Collectd functions and responsibilities.md"
   ]
 }

@@ -8,10 +8,12 @@ collectdctl
 Descriptions:
 collectd: This is the system statistics daemon that receives the system statistics from defined resources through number of ways. The main daemon only performs loading, querying, and submitting to plugins.
 The main source of gathering this information is through a "Plugin"
+
+Process of initializing the daemon:
 ```mermaid
 graph TD;
 %% Start
-id1(main)
+id0(main)
 id1.1(c = getopt_argc_argv)
 id1.1.1(Argument 'C' will assign config file as the one passed at optarg)
 id1.1.2(Argument 't' will set test_config=1)
@@ -24,7 +26,7 @@ id1.9(plugin_init_ctx to initialize pthread_key)
 
 %% Initialization of Plugins
 id2.1(Reading the config file)
-id2.2(Check if the config file == NULL)
+id2.2(Check if BaseDir is set)
 id2.3(Dispatch the value in the config file)
 id2.4(notify_upstart && notify_systemd)
 id2.5(Fork the child process and call setsid to start a new process itself)
@@ -34,7 +36,7 @@ id2.7(plugin_init_all)
 id99(ABNORMAL_EXIT)
 
 %% ---- Links ----
-id1 --> id1.1
+id0 --> id1.1
 id1.1 -- IF NO ARGUMENTS PASSED --> id1.9
 id1.1 --> id1.1.1
 id1.1 --> id1.1.2
@@ -43,6 +45,7 @@ id1.1 --> id1.1.4
 id1.1 --> id1.1.5
 id1.1 --> id1.1.6
 id1.1 --> id1.1.7
+id1.1 -- No arguments passed --> id1.9
 id1.1.1 --> id1.9
 id1.1.2 --> id1.9
 id1.1.3 --> id1.9
@@ -50,14 +53,26 @@ id1.1.4 --> id1.9
 id1.1.5 --> id1.9
 id1.1.6 --> id1.9
 id1.1.7 --> id1.9
+id1.9 --> id2.1
+id2.1 -- BAD CONFIG FILE --> id99
+id2.1 --> id2.2
+id2.2 -- BASEDIR NOT SET --> id99
+id2.2 --> id2.3
+id2.3 --> id2.4
+id2.5 --> id2.6
+id2.6 --> id2.7
 ```
+This initializes two types of threads in collectd:
+reader threads: Responsible for reading the data. They are plugin specific. Denoted as reader#N.
+writer threads: Responsible for writing plugin specific data. Denoted as writer#N.
+
+
 
 Important functions:
 pthread_key_create: This is needed to manage the different static variables and the different global variables that belong to N threads. pthread_key_create allocates a new TSD key which helps access TSD (Thread Specific Data) area which is Private area of thread.
 void * are assosciated to TSD Keys.
 
 plugin_init_all: Will initialize plugins and start reader#N and writer#N threads
-
 
 collectdmon: 
 This is the monitoring daemon for collectd. It acts as a small wrapper daemon which starts and monitors the collectd daemon. If collectd terminates it will be automatically restarted unless collectdmon was told to shut it down.
