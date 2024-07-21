@@ -3,12 +3,12 @@
 .section .text
 .globl _start
 _start:
-    push $3
+    push $8
     push $2
     call power
     add $8, %rsp
     push %rax
-    push $2
+    push $3
     push $5
     call power
     add $8, %rsp
