@@ -1,47 +1,45 @@
 .section .data
 
 .section .text
-.globl _start
-_start:
-    push $8
-    push $2
-    call power
-    add $8, %rsp
-    push %rax
-    push $3
-    push $5
-    call power
-    add $8, %rsp
-    pop %rbx
-    add %rax, %rbx
+# Macros go here
+.macro print val, len
+    mov $1, %rax
+    mov $1, %rdi
+    add $64, \val
+    mov \val, %rsi
+    mov \len, %rdx
+    syscall
+.endm
 
+# Macros end here
+.globl _start
+.type power, @function
+_start:
+    push $3
+    push $3
+    call power
+    mov %rax, %rbx
     mov $1, %rax
     int $0x80
 
-.type power, @function
 power:
-    push %rbp              # Save old base pointer
-    mov %rsp, %rbp         # Make stack pointer the base pointer
-    sub $4, %rsp           # get room for our local storage
+    push %rbp
+    mov %rsp, %rbp
+    sub $8, %rsp
+    # Getting arguments
+    mov 24(%rsp), %rax
+    mov 32(%rsp), %rcx
+    mov %rax, %rsp
 
-    mov 8(%rsp), %rbx      # put the first argument in rbx
-    mov 12(%rsp), %rcx     # put the second argument in rcx
-
-    mov %rbx, -4(%rbp)     # store current result
-
-    power_loop_start:
-        cmp $1, %rcx       # if the power is 1, we are done
+    start_power:
+        cmp $1, %rcx
         je end_power
-        mov -4(%rbp), %rax
-        imul %rbx, %rax    # Multiply current result by base number
-
-        mov %rax, -4(%rbp) # Store the current result
-
+        imul %rax, %rsp
         dec %rcx
-        jmp power_loop_start
+        jmp start_power
 
     end_power:
-        mov -4(%rbp), %rax # return value goes in %rax
-        mov %rbp, %rsp     # restore the stack pointer
-        pop %rbp           # restore the base pointer
+        mov %rsp, %rax
+        mov %rbp, %rsp
+        pop %rbp
         ret
