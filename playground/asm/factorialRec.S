@@ -14,7 +14,7 @@ _start:
     # To end the program
     mov $1, %rax
     # Call interrupt 128
-    int $0x80
+    int $128
 
 .type factorial, @function
 # factorial(value)

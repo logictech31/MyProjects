@@ -3,13 +3,13 @@ if [ $USER == "root" ]
 then
 echo "[lustre-client]
 name=Lustre Client Repository
-baseurl=https://downloads.whamcloud.com/public/lustre/latest-release/el8.9/client
+baseurl=https://downloads.whamcloud.com/public/lustre/lustre-2.15.3/el8.8/client
 enabled=1
 gpgcheck=0
 
 [lustre-server]
 name=Lustre Server Repository
-baseurl=https://downloads.whamcloud.com/public/lustre/latest-release/el8.9/server
+baseurl=https://downloads.whamcloud.com/public/lustre/lustre-2.15.3/el8.8/server
 enabled=1
 gpgcheck=0
 
