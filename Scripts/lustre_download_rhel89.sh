@@ -3,13 +3,13 @@ if [ $USER == "root" ]
 then
 echo "[lustre-client]
 name=Lustre Client Repository
-baseurl=https://downloads.whamcloud.com/public/lustre/lustre-2.15.3/el8.8/client
+baseurl=https://downloads.whamcloud.com/public/lustre/lustre-2.15.4/el8.9/client
 enabled=1
 gpgcheck=0
 
 [lustre-server]
 name=Lustre Server Repository
-baseurl=https://downloads.whamcloud.com/public/lustre/lustre-2.15.3/el8.8/server
+baseurl=https://downloads.whamcloud.com/public/lustre/lustre-2.15.4/el8.9/server
 enabled=1
 gpgcheck=0
 
@@ -20,8 +20,7 @@ enabled=1
 gpgcheck=0" >> lustre.repo
 mv lustre.repo /etc/yum.repos.d/
 yum makecache
-yum install -y https://downloads.whamcloud.com/public/lustre/latest-release/el8.9/server/RPMS/x86_64/kernel-4.18.0-513.9.1.el8_lustre.x86_64.rpm
-yum install -y e2fsprogs lustre
+dnf install -y lustre
 dnf install -y git flex libtool pkg-config autoconf automake bison lustre-tests
 reboot
 else
